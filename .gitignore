@@ -1,0 +1,37 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# 运行时数据与 SQLite 数据库
+data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# 临时制种与敏感凭据文件
+*.torrent
+*.bbcode.txt
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.pfx
+
+# 系统与编辑器杂质
+.DS_Store
+Thumbs.db
+@eaDir/
+.!qB/
+*.part
+*.tmp
+.idea/
+.vscode/

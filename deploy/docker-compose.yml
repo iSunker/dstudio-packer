@@ -1,0 +1,31 @@
+name: dstudio-packer
+
+services:
+  dstudio-packer:
+    image: isunker/dstudio-packer:latest
+    container_name: dstudio-packer
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+      - PYTHONUNBUFFERED=1
+      - QB_HOST=qbit-dstudio-publish
+      - QB_PORT=3018
+      - COOKIECLOUD_DATA_DIR=/data/cookiecloud
+      - TMDB_API_KEY=${TMDB_API_KEY:-}
+    volumes:
+      # 代码动态挂载 (热加载最新逻辑)
+      - /volume2/docker_ssd/dstudio-packer/src:/app
+      # 数据库与持久化数据
+      - /volume2/docker_ssd/dstudio-packer/data:/app/data
+      # 挂载工作 SSD 卷 (与 3018 共享同卷，支持零拷贝硬链接)
+      - /volume2/qb_temp/DSstudio_publish:/downloads
+      # CookieCloud 凭据只读挂载
+      - /volume2/docker_ssd/cookiecloud/data:/data/cookiecloud:ro
+      # pt-notice 事件归档挂载
+      - /volume2/docker_ssd/pt-notice/data/spool/dstudio:/volume2/docker_ssd/pt-notice/data/spool/dstudio
+    networks:
+      - qbnet
+
+networks:
+  qbnet:
+    external: true
